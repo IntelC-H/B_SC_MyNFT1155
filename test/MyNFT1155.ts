@@ -25,10 +25,10 @@ describe('MyNFT1155', function () {
     expect(await MyNFTContract.mintPrice()).to.equal(ethers.parseEther("0.002"))
   })
 
-  // it("[ ] Should not mint more than max supply", async function () {
-  //   await expect(MyNFTContract.connect(addr1).mint(10001, { value: ethers.parseEther("20") }))
-  //     .to.be.revertedWith("Minting would exceed max supply")
-  // })
+  it("[ ] Should not mint more than max supply", async function () {
+    await expect(MyNFTContract.connect(addr1).mint(10001, { value: ethers.parseEther("20") }))
+      .to.be.revertedWith("Minting would exceed max supply")
+  })
 
   it("[ ] Should not mint more than 10 NFTs at a time", async function () {
     await expect(MyNFTContract.connect(addr1).mint(11, { value: ethers.parseEther("0.022") }))
@@ -40,14 +40,14 @@ describe('MyNFT1155', function () {
     expect(await MyNFTContract.getMinted()).to.equal(0)
   })
 
-  // it("[ ] Should withdraw funds correctly", async function () {
-  //   await MyNFTContract.connect(addr1).mint(1, { value: ethers.parseEther("0.01") })
-  //   console.log(await MyNFTContract.getMinted())
-  //   const initialBalance = await owner.provider?.getBalance(owner)
-  //   console.log('initialBalance: ', initialBalance)
-  //   await MyNFTContract.connect(owner).withdraw()
-  //   const finalBalance = await owner.provider?.getBalance(owner)
-  //   console.log('finalBalance: ', finalBalance)
-  //   expect(finalBalance).to.be.gt(initialBalance)
-  // })
+  it("[ ] Should withdraw funds correctly", async function () {
+    await MyNFTContract.connect(addr1).mint(1, { value: ethers.parseEther("0.01") })
+    console.log(await MyNFTContract.getMinted())
+    const initialBalance = await owner.provider?.getBalance(owner)
+    console.log('initialBalance: ', initialBalance)
+    await MyNFTContract.connect(owner).withdraw()
+    const finalBalance = await owner.provider?.getBalance(owner)
+    console.log('finalBalance: ', finalBalance)
+    expect(finalBalance).to.be.gt(initialBalance)
+  })
 })
